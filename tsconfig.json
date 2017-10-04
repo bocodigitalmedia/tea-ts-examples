@@ -19,6 +19,9 @@
     "noImplicitThis": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "types": [
+      "ramda"
+    ]
   }
 }

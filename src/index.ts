@@ -1,22 +1,15 @@
-import { mount } from 'tea-ts'
-import { VNode, render as infernoRender } from 'inferno'
+import { mount } from './Tea'
 import { app } from './app'
-import { Msg } from './Message'
-import { State } from './State'
 
-const render = (target: HTMLElement) => (vnode: VNode): void => {
-  infernoRender(vnode, target)
-}
+const target = document.getElementById('app')
 
-const maybeTarget = document.getElementById('app')
-
-switch(maybeTarget) {
+switch(target) {
   case null: {
     console.error('could not find mount target')
     break
   }
   default: {
-    const mounted = mount<Msg, State, VNode>(app, maybeTarget, render)
+    const mounted = mount(app, <HTMLElement>target)
 
     mounted.message$.subscribe({
       next: msg => console.log(msg.type, msg.payload),
@@ -25,7 +18,7 @@ switch(maybeTarget) {
     })
 
     mounted.state$.subscribe({
-      next: msg => console.log(msg.todos),
+      next: msg => console.log(msg),
       error: () => {},
       complete: () => {},
     })

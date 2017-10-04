@@ -1,17 +1,14 @@
-import { App, Init } from 'tea-ts'
-import { Msg, load } from './Message'
-import { State, initial } from './State'
-import { VNode } from 'inferno'
-
-import { update } from './Update'
-import { service } from './Service'
+import { App, Init } from './Tea'
+import { todosRequested } from './Event'
+import { initial, update } from './State'
 import { view } from './View'
+import { service } from './Service'
 
-export const init: Init<Msg, State> = dispatch => {
-  dispatch(load(null))
+export const init: Init = dispatch => {
+  dispatch(todosRequested(null))
   return initial
 }
 
-export const app: App<Msg, State, VNode> = {
+export const app: App = {
   init, update, view, service
 }

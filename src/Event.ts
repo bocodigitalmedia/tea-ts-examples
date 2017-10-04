@@ -2,8 +2,8 @@ export type Msg =
   | Created
   | Toggled
   | Removed
-  | Load
-  | Loaded
+  | TodosRequested
+  | TodosReceived
 
 export interface Created {
   type: 'created',
@@ -20,14 +20,14 @@ export interface Removed {
   payload: { id: string }
 }
 
-export interface Load {
-  type: "load",
-  payload: null
+export interface TodosReceived {
+  type: "todosReceived",
+  payload: { [id: string]: { text: string, completed: boolean } }
 }
 
-export interface Loaded {
-  type: "loaded",
-  payload: { [id: string]: { text: string, completed: boolean } }
+export interface TodosRequested {
+  type: "todosRequested",
+  payload: null
 }
 
 export const created = (payload: Created['payload']): Created => ({
@@ -42,10 +42,10 @@ export const removed = (payload: Removed['payload']): Removed => ({
   type: 'removed', payload
 })
 
-export const load = (payload: Load['payload']): Load => ({
-  type: 'load', payload
+export const todosReceived = (payload: TodosReceived['payload']): TodosReceived => ({
+  type: 'todosReceived', payload
 })
 
-export const loaded = (payload: Loaded['payload']): Loaded => ({
-  type: 'loaded', payload
+export const todosRequested = (payload: TodosRequested['payload']): TodosRequested => ({
+  type: 'todosRequested', payload
 })
