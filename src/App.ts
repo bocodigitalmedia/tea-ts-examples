@@ -5,7 +5,7 @@ import { view } from './View'
 import { service } from './Service'
 
 export const init: Init = dispatch => {
-  dispatch(todosRequested(null))
+  dispatch(todosRequested({ retries: 0 }))
   return initial
 }
 

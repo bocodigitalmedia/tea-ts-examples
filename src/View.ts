@@ -2,12 +2,14 @@ import { View } from './Tea'
 import { State } from './State'
 import { apply } from 'ramda'
 import { view as viewTodoList } from './views/TodoList'
-
-import el from 'inferno-create-element'
+import { view as viewTodosRequest } from './views/TodosRequest'
 
 export const view: View<State> = dispatch => state => {
-  if(state.todosRequest.active) {
-    return <span>Loading todos...</span>
+  if(state.todosRequest.active || state.todosRequest.error) {
+    return apply(
+      viewTodosRequest(dispatch),
+      [state.todosRequest]
+    )
   } else {
     return apply(
       viewTodoList(dispatch),

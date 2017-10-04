@@ -4,6 +4,7 @@ export type Msg =
   | Removed
   | TodosRequested
   | TodosReceived
+  | TodosRequestFailed
 
 export interface Created {
   type: 'created',
@@ -27,7 +28,12 @@ export interface TodosReceived {
 
 export interface TodosRequested {
   type: "todosRequested",
-  payload: null
+  payload: { retries: number }
+}
+
+export interface TodosRequestFailed {
+  type: "todosRequestFailed",
+  payload: { error: string }
 }
 
 export const created = (payload: Created['payload']): Created => ({
@@ -48,4 +54,8 @@ export const todosReceived = (payload: TodosReceived['payload']): TodosReceived 
 
 export const todosRequested = (payload: TodosRequested['payload']): TodosRequested => ({
   type: 'todosRequested', payload
+})
+
+export const todosRequestFailed = (payload: TodosRequestFailed['payload']): TodosRequestFailed => ({
+  type: 'todosRequestFailed', payload
 })
