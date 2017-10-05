@@ -5,6 +5,7 @@ export type Msg =
   | TodosRequested
   | TodosReceived
   | TodosRequestFailed
+  | TodosRequestRetried
 
 
 export interface TodoCreated {
@@ -50,10 +51,17 @@ export interface TodosRequested {
 export interface TodosRequestFailed {
   readonly type: 'TodosRequestFailed',
   readonly payload: Readonly<{
-    error: string
+    error: string,
+    retries: number
   }>
 }
 
+export interface TodosRequestRetried {
+  readonly type: 'TodosRequestRetried',
+  readonly payload: Readonly<{
+    retries: number
+  }>
+}
 export const todoCreated = (payload: TodoCreated['payload']): TodoCreated => ({
   type: 'TodoCreated', payload
 })
@@ -76,4 +84,8 @@ export const todosRequested = (payload: TodosRequested['payload']): TodosRequest
 
 export const todosRequestFailed = (payload: TodosRequestFailed['payload']): TodosRequestFailed => ({
   type: 'TodosRequestFailed', payload
+})
+
+export const todosRequestRetried = (payload: TodosRequestRetried['payload']): TodosRequestRetried => ({
+  type: 'TodosRequestRetried', payload
 })

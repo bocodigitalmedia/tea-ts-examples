@@ -5,7 +5,8 @@ export const service: Service = dispatch => msg => {
 
   switch(msg.type) {
 
-    case 'TodosRequested': {
+    case 'TodosRequested':
+    case 'TodosRequestRetried': {
 
       const received = todosReceived({
         '1': { text: 'First', completed: true },
@@ -13,7 +14,8 @@ export const service: Service = dispatch => msg => {
       })
 
       const failed = todosRequestFailed({
-        error: 'Could not load todos'
+        error: 'Could not load todos',
+        retries: msg.payload.retries
       })
 
       const requestMsg = msg.payload.retries < 1 ? failed : received

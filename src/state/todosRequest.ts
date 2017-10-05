@@ -9,17 +9,21 @@ export const update: Update<State> = msg => state => {
   switch(msg.type) {
 
     case 'TodosRequested': {
-      const { retries } = msg.payload
-      return { ...state, active: true, error: null, retries }
+      return { ...state, status: 'active', error: null, retries: 0 as 0 }
     }
 
     case 'TodosReceived': {
-      return { ...state, active: false, error: null, retries: 0 }
+      return { status: 'inactive', error: null, retries: 0 as 0 }
     }
 
     case 'TodosRequestFailed': {
-      const { error } = msg.payload
-      return { ...state, active: false, error }
+      const { error, retries } = msg.payload
+      return { ...state, status: 'failed', error, retries }
+    }
+
+    case 'TodosRequestRetried': {
+      const { retries } = msg.payload
+      return { ...state, status: 'retry', error: null, retries }
     }
 
     default: {
