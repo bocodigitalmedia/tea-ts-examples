@@ -8,16 +8,17 @@ export type State = Todos
 export const initial = empty
 
 export const update: Update<Todos> = msg => (todos:Todos) => {
+
   switch(msg.type) {
 
-    case "todosReceived": {
+    case 'TodosReceived': {
       return apply(
         from(msg.payload),
         [todos],
       )
     }
 
-    case "toggled": {
+    case 'TodoToggled': {
       const { id, completed } = msg.payload
 
       return apply(
@@ -29,5 +30,6 @@ export const update: Update<Todos> = msg => (todos:Todos) => {
     default: {
       return todos
     }
+
   }
 }

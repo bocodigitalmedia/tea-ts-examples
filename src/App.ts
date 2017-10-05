@@ -1,5 +1,5 @@
 import { App, Init } from './Tea'
-import { todosRequested } from './Event'
+import { todosRequested } from './Message'
 import { initial, update } from './State'
 import { view } from './View'
 import { service } from './Service'

@@ -1,6 +1,6 @@
 import * as Tea from 'tea-ts'
 import { VNode, render as inferno } from 'inferno'
-import { Msg } from './Event'
+import { Msg } from './Message'
 import { State } from './State'
 
 export type App = Tea.App<Msg, State, VNode>

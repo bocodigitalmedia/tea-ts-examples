@@ -1,13 +1,13 @@
 import { Todo } from './Todo'
 import { omit, set as tset } from 'timm'
 
-type TodoMap = {
-  [id: string]: Todo
+export interface TodoMap {
+  readonly [id: string]: Todo
 }
 
-export type Todos = {
-  byId: TodoMap,
-  ids: string[],
+export interface Todos {
+  readonly byId: TodoMap,
+  readonly ids: ReadonlyArray<string>,
 }
 
 export const empty: Todos = {
@@ -49,7 +49,7 @@ export const remove = (id: string) => (todos: Todos): Todos => {
 
 export const update = (id: string, fn: (todo: Todo) => Todo) => (todos: Todos): Todos => {
   const todo = get(id)(todos)
-  return todo === undefined 
+  return todo === undefined
     ? todos
     : set(id, fn(todo))(todos)
 }

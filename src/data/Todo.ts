@@ -1,10 +1,10 @@
-export type Todo = {
-  text: string,
-  completed: boolean
+export interface Todo {
+  readonly text: string,
+  readonly completed: boolean
 }
 
 export const empty: Todo = {
-  text: "",
+  text: '',
   completed: false
 }
 

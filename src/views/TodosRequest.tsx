@@ -2,7 +2,7 @@ import el from 'inferno-create-element'
 
 import { View } from '../Tea'
 import { Request } from '../data/Request'
-import { todosRequested } from '../Event'
+import { todosRequested } from '../Message'
 
 export const view: View<Request> = dispatch => state => {
 
@@ -14,7 +14,7 @@ export const view: View<Request> = dispatch => state => {
     return viewError(dispatch, state)
   }
 
-  return (<div style="display: none"/>)
+  return (<div style='display: none'/>)
 }
 
 export const viewActive = (_dispatch, _state) => (
