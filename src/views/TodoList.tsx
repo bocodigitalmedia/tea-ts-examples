@@ -1,6 +1,4 @@
-import el from 'inferno-create-element'
-
-import { View } from '../Tea'
+import { View, jsx } from '../Tea'
 import { Todos, map } from '../data/Todos'
 import { apply } from 'ramda'
 import { view as viewListItem } from './TodoListItem'

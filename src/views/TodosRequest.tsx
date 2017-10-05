@@ -1,33 +1,26 @@
-import el from 'inferno-create-element'
-
-import { View } from '../Tea'
+import { View, CreateHandler, jsx } from '../Tea'
 import { Request } from '../data/Request'
 import { todosRequested } from '../Message'
+import { State as TodosRequest } from '../state/todosRequest'
 
 export const view: View<Request> = dispatch => state => {
 
   if(state.active) {
-    return viewActive(dispatch, state)
+    return <div>...</div>
   }
 
-  if(state.error !== null) {
-    return viewError(dispatch, state)
+  if(state.error) {
+    return (
+      <div>
+        <h3>Error</h3>
+        <p>{ state.error }</p>
+        <button onClick={ retryClick(dispatch, state) }>Retry</button>
+      </div>
+    )
   }
 
-  return (<div style='display: none'/>)
+  return <div style="display: none" />
 }
 
-export const viewActive = (_dispatch, _state) => (
-  <div>....</div>
-)
-
-export const viewError = (dispatch, state) => (
-  <div>
-    <h3>Could not load todos</h3>
-    <p>{ state.error }</p>
-    <button onClick={ retryClick(dispatch, state) }>Retry</button>
-  </div>
-)
-
-export const retryClick = (dispatch, state) => _ =>
+export const retryClick: CreateHandler<TodosRequest> = (dispatch, state) => _ =>
   dispatch(todosRequested({ retries: state.retries + 1 }))
