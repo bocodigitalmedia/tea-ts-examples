@@ -1,4 +1,7 @@
 {
+  "include": [
+    "node_modules/inferno-jsx-type-definitions/InfernoJSX.d.ts"
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es2015",
@@ -6,11 +9,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "jsxFactory": "jsx",
-    "lib": [
-      "es2015",
-      "es2016",
-      "dom"
-    ],
+    "strict": true,
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
