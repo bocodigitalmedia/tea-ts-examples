@@ -1,5 +1,5 @@
 const path = require('path');
-const UglifyPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
@@ -10,13 +10,8 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: 'babel-loader',
-            options: { presets: "es2015" }
-          },
-          {
-            loader: 'ts-loader'
-          }
+          { loader: 'babel-loader' },
+          { loader: 'ts-loader' },
         ]
       }
     ]

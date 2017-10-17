@@ -1,4 +1,6 @@
-import { State as Todo, idNotEquals } from './Todo'
+import * as Todo from './Todo'
+
+type Todo = Todo.State
 
 export type State = Todos
 
@@ -11,5 +13,17 @@ export const add = (...items: Todo[]) => (todos: Todos): Todos => {
 }
 
 export const remove = (id: string) => (todos: Todos): Todos => {
-  return todos.filter(idNotEquals(id))
+  return todos.filter(Todo.idNotEquals(id))
 }
+
+export const update =
+  (id: string, ...fns: ((t: Todo) => Todo)[]) =>
+  (todos: Todos): Todos => {
+    return todos.map(todo => {
+      if(todo.id === id) {
+        return fns.reduce((memo, fn) => fn(memo), todo)
+      } else {
+        return todo
+      }
+    })
+  }

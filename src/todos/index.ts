@@ -3,10 +3,11 @@ import { update } from './Update'
 import { view } from './View'
 import { service } from './Service'
 import { Init, App } from './Tea'
+import { fetchTodos } from './Msg'
 
 export const init: Init =
   dispatch => {
-    dispatch({ type: "RequestTodos" })
+    dispatch(fetchTodos())
     return initial
   }
 

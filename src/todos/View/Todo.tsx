@@ -1,24 +1,68 @@
-import { jsx, ComponentView } from '../Tea'
+import { jsx, View } from '../Tea'
 import { State as Todo } from '../State/Todo'
-import { has as hasRequest } from '../State/Requests'
-import { removeTodo } from '../Msg'
+import { removeTodo, beginEditTodo, editTodoInput, cancelEditTodo, finishEditTodo } from '../Msg'
 
-export const listItem: ComponentView<Todo> =
-  (dispatch, state) => ({ id, text }) => {
+const KEYCODE_ENTER = 13
+const KEYCODE_ESC = 27
 
-    const handleClick = (_evt: any) => {
+export const listItem: View<Todo> =
+  (dispatch) => ({ id, text, newText, editable, editRequest, removeRequest }) => {
+
+    const listItemId = `TodoListItem-${id}`
+    const inputSelector = `#${listItemId} > input`
+
+    const dispatchRemove = (_evt: any) => {
       dispatch(removeTodo(id))
     }
 
-    return (
-      <li>
-        <span>{ text }</span>
-        <button
-          disabled={ hasRequest(id)(state.removeTodoRequests) }
-          onClick={ handleClick }
-        >
-          Remove
-        </button>
-      </li>
-    )
+    const dispatchEdit = (_evt: any) => {
+      if(!removeRequest.active) {
+        dispatch(beginEditTodo({ id, inputSelector }))
+      }
+    }
+
+    const dispatchCancelEdit = (_evt: any) => {
+      dispatch(cancelEditTodo(id))
+    }
+
+    const handleInputKeyUp = (evt: any) => {
+
+      if(evt.keyCode === KEYCODE_ESC) {
+        dispatch(cancelEditTodo(id))
+      }
+
+      if(evt.keyCode === KEYCODE_ENTER) {
+        dispatch(finishEditTodo({ id, newText }))
+      }
+
+      else {
+        dispatch(editTodoInput({ id, newText: evt.target.value }))
+      }
+    }
+
+    if(editable) {
+      return (
+        <li id={ listItemId }>
+          <input
+            type="text"
+            value={ newText }
+            disabled={ editRequest.active }
+            onKeyUp={ handleInputKeyUp }
+            onBlur={ dispatchCancelEdit }
+            />
+        </li>
+      )
+    } else {
+      return (
+        <li id={ listItemId }>
+          <span onClick={ dispatchEdit }>{ text }</span>
+          <button
+            disabled={ removeRequest.active }
+            onClick={ dispatchRemove }
+          >
+            Remove
+          </button>
+        </li>
+      )
+    }
   }

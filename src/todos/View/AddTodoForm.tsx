@@ -1,9 +1,9 @@
-import { jsx, ComponentView } from '../Tea'
+import { jsx, View } from '../Tea'
 import { State as AddTodoForm } from '../State/AddTodoForm'
 import { addTodo, addTodoInput } from '../Msg'
 
-export const form: ComponentView<AddTodoForm> =
-  (dispatch, state) => ({ text }) => {
+export const form: View<AddTodoForm> =
+  (dispatch) => ({ text, request }) => {
 
     const handleSubmit = (evt: any) => {
       evt.preventDefault()
@@ -19,8 +19,9 @@ export const form: ComponentView<AddTodoForm> =
 
         <input
           type="text" value={ text }
-          disabled={ state.addTodoRequest.active }
+          disabled={ request.active }
           onInput={ handleInput }
+          placeholder="Add a todo..."
         />
 
       </form>

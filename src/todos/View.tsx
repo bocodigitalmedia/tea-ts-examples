@@ -7,7 +7,7 @@ export const view: View =
   dispatch => state => (
     <div>
       { requestAlert("Loading todos...")(dispatch)(state.fetchTodosRequest) }
-      { viewTodos(dispatch, state)(state.todos) }
-      { viewAddTodoForm(dispatch, state)(state.addTodoForm) }
+      { viewTodos(dispatch)(state.todos) }
+      { viewAddTodoForm(dispatch)(state.addTodoForm) }
     </div>
   )
