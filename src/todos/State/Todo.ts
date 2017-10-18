@@ -19,6 +19,10 @@ export const initial: State = {
   removeRequest: initialRequest
 }
 
+export const from = ({ id, text }: { id: string, text: string }): State => ({
+  ...initial, id, text
+})
+
 export const create = (text: string): State => ({
   ...initial, text, id: uuid()
 })
