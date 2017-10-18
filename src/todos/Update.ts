@@ -52,6 +52,14 @@ export const onTodoRemoved = (msg: Msg.TodoRemoved) => apply(
   change("todos", Todos.remove(payload(msg)))
 )
 
+export const onRemoveTodoFailed = (msg: Msg.RemoveTodoFailed) => apply(
+  change("todos",
+    Todos.update(
+      payload(msg).id,
+      Todo.updateRemoveRequest(Request.setError(payload(msg).error))
+    )
+  )
+)
 
 // Editing a todo
 export const onBeginEditTodo = (msg: Msg.BeginEditTodo) => apply(
@@ -135,6 +143,9 @@ export const update: Update =
 
     if(Msg.isTodoEdited(msg))
       return onTodoEdited(msg)(state)
+
+    if(Msg.isRemoveTodoFailed(msg))
+      return onRemoveTodoFailed(msg)(state)
 
     return state
   }

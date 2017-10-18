@@ -1,6 +1,7 @@
 import { jsx, View } from '../Tea'
 import { State as Todo } from '../State/Todo'
 import { removeTodo, beginEditTodo, editTodoInput, cancelEditTodo, finishEditTodo } from '../Msg'
+import { State as Request } from '../State/Request'
 
 const KEYCODE_ENTER = 13
 const KEYCODE_ESC = 27
@@ -62,7 +63,16 @@ export const listItem: View<Todo> =
           >
             Remove
           </button>
+          { removeErrorMessage(removeRequest) }
         </li>
       )
     }
   }
+
+const removeErrorMessage = (request: Request) => {
+  if(request.error !== null) {
+    return <div>{ request.error }</div>
+  } else {
+    return <span />
+  }
+}

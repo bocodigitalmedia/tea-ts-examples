@@ -1,5 +1,6 @@
 import { VNode, render as inferno } from 'inferno'
 import { mount } from 'tea-ts'
+import { app as Hello } from './hello'
 import { app as Counter } from './counter'
 import { app as Todos } from './todos'
 
@@ -13,5 +14,6 @@ const render =
     inferno(vnode, target)
   }
 
-mount(Counter, element("counter"), render)
 mount(Todos, element("todos"), render)
+mount(Counter, element("counter"), render)
+mount(Hello, element("hello"), render)

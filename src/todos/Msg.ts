@@ -4,6 +4,7 @@ export type Msg =
   | FetchTodos
   | TodosFetched
   | RemoveTodo
+  | RemoveTodoFailed
   | TodoRemoved
   | AddTodo
   | AddTodoInput
@@ -16,6 +17,15 @@ export type Msg =
 
 export const payload = <T extends Msg> (msg: T): T[1] =>
   msg[1]
+
+export type RemoveTodoFailed =
+  ["RemoveTodoFailed", { id: string, error: string }]
+
+export const removeTodoFailed = (payload: RemoveTodoFailed[1]): RemoveTodoFailed =>
+  ["RemoveTodoFailed", payload]
+
+export const isRemoveTodoFailed = (msg: Msg): msg is RemoveTodoFailed =>
+  msg[0] === "RemoveTodoFailed"
 
 // Fetch Todos
 export type FetchTodos =
