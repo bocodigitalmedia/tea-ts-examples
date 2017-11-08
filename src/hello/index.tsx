@@ -1,53 +1,60 @@
-import jsx from 'inferno-create-element'
-import { VNode } from 'inferno'
-import { Init, View, Update, Service } from 'tea-ts'
+import jsx from "inferno-create-element"
+import { VNode } from "inferno"
+import { Init, View, Update, Service } from "tea-ts"
 
 type State = string
 
-type Msg =
-  | Input
-  | Focus
+type Msg = Input | Focus
 
-type Input =
-  ["Input", string]
+interface Input {
+  type: "Input"
+  payload: string
+}
 
-type Focus =
-  ["Focus", null]
+interface Focus {
+  type: "Focus"
+  payload: null
+}
 
-const init: Init<Msg, State> =
-  dispatch => {
-    dispatch(["Focus", null])
-    return "World"
-  }
+function Focus(payload: Focus["payload"] = null): Focus {
+  return { type: "Focus", payload }
+}
+
+function Input(payload: Input["payload"]): Input {
+  return { type: "Input", payload }
+}
+
+const init: Init<Msg, State> = dispatch => {
+  dispatch(Focus())
+  return "World"
+}
 
 const view: View<Msg, State, VNode> = dispatch => state => (
   <div>
-    <p>Hello { state }!</p>
+    <p>Hello {state}!</p>
     <input
       id="HelloInput"
       type="text"
-      value={ state }
-      onInput={ evt => dispatch(["Input", evt.target.value]) }
+      value={state}
+      onInput={(evt: any) => dispatch(Input(evt.target.value))}
     />
   </div>
 )
 
 const update: Update<Msg, State> = (state, msg) => {
-  if(msg[0] === "Input") {
-    return msg[1]
+  if (msg.type === "Input") {
+    return msg.payload
   } else {
     return state
   }
 }
 
-const service: Service<Msg> =
-  dispatch => msg => {
-    if(msg[0] === "Focus") {
-      const el = document.getElementById("HelloInput") as HTMLInputElement
-      el.focus()
-      el.select()
-    }
+const service: Service<Msg> = _dispatch => msg => {
+  if (msg.payload === "Focus") {
+    const el = document.getElementById("HelloInput") as HTMLInputElement
+    el.focus()
+    el.select()
   }
-
+}
 
 export const app = { init, view, update, service }

@@ -9950,27 +9950,35 @@ var _infernoCreateElement2 = _interopRequireDefault(_infernoCreateElement);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function Focus() {
+    var payload = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    return { type: "Focus", payload: payload };
+}
+function Input(payload) {
+    return { type: "Input", payload: payload };
+}
 var init = function init(dispatch) {
-    dispatch(["Focus", null]);
+    dispatch(Focus());
     return "World";
 };
 var view = function view(dispatch) {
     return function (state) {
         return (0, _infernoCreateElement2.default)("div", null, (0, _infernoCreateElement2.default)("p", null, "Hello ", state, "!"), (0, _infernoCreateElement2.default)("input", { id: "HelloInput", type: "text", value: state, onInput: function onInput(evt) {
-                return dispatch(["Input", evt.target.value]);
+                return dispatch(Input(evt.target.value));
             } }));
     };
 };
 var update = function update(state, msg) {
-    if (msg[0] === "Input") {
-        return msg[1];
+    if (msg.type === "Input") {
+        return msg.payload;
     } else {
         return state;
     }
 };
-var service = function service(dispatch) {
+var service = function service(_dispatch) {
     return function (msg) {
-        if (msg[0] === "Focus") {
+        if (msg.payload === "Focus") {
             var el = document.getElementById("HelloInput");
             el.focus();
             el.select();
